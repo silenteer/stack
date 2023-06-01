@@ -21,6 +21,7 @@ Projects within `backend`, `frontend` and `shared` will be automically added to 
 - Write a short, good name to reflect what is the library about
 - Don't expose multiple entries in a library, it'd rather have multiple directory. For example, `@shared/utils` is not cool. Maybe `@shared/translation` is better
 - Shared is normally for cross backend/frontend; as a rule of thumb. Nothing stops you from adding `@backend/utils` and `@frontend/utils`, but you can also add to `shared`, don't too worry about where should it goes
+- As we are using `typescript` directly, please NEVER add source under `src` dir, that'll mess up the directory structure on reference
 
 ## Power of readme
 
