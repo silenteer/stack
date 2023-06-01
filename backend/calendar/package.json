@@ -1,4 +1,7 @@
 {
   "name": "@backend/calendar",
-  "packageManager": "yarn@3.5.1"
+  "packageManager": "yarn@3.5.1",
+  "dependencies": {
+    "@submodule/core": "^4.1.0"
+  }
 }

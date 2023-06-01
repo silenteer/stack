@@ -9,10 +9,13 @@
 # Documentation here: https://yarnpkg.com/features/zero-installs
 **/.yarn/cache
 **/.pnp.*
-**/node_module
+**/node_modules
 
 # next specific
 **/.next
 
 # distribution in general
 **/dist
+
+# Mac specific
+**/.DS_Store
