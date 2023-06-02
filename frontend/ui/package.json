@@ -1,6 +1,8 @@
 {
-  "name": "@frontend/components",
+  "name": "@frontend/ui",
   "packageManager": "yarn@3.5.1",
+  "main": "./index.ts",
+  "types": "./index.ts",
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.6.0",

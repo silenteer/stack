@@ -1,5 +1,9 @@
 {
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "editor.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorSurroundingLines": 15,
+  "editor.cursorBlinking": "blink"
 }
