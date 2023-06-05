@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "bradlc.vscode-tailwindcss",
-    "task.vscode-task"
+    "task.vscode-task",
+    "prisma.prisma"
   ]
 }
