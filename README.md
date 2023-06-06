@@ -1,4 +1,4 @@
-# Garrio Calendar
+# Silenteer stack
 
 This repository is the mono repository for the Silentium node.js stack.
 
