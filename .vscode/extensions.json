@@ -2,6 +2,7 @@
   "recommendations": [
     "bradlc.vscode-tailwindcss",
     "task.vscode-task",
-    "prisma.prisma"
+    "prisma.prisma",
+    "redhat.vscode-yaml"
   ]
 }

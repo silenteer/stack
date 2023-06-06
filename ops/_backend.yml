@@ -1,0 +1,34 @@
+version: 3
+
+tasks:
+
+  prisma:
+    aliases: [p]
+    dir: backend/sample-backend
+    sources:
+      - prisma/schema.prisma
+      - package.json
+    generates:
+      - prisma/client/*
+    cmds:
+      - yarn generate
+
+  build:
+    aliases: [b]
+    deps: [p]
+    dir: backend/sample-backend
+    sources:
+      - "!client/*"
+      - "**/*.ts"
+      - package.json
+      - tsconfig.json
+    generates:
+      - dist/*
+    cmds:
+      - yarn run -T tsup main.ts
+
+  dev:
+    aliases: [d]
+    deps: [p]
+    cmds:
+      - yarn workspace @sample/backend tsx watch --clear-screen=false main

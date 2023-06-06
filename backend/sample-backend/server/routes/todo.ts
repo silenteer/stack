@@ -1,9 +1,9 @@
 import { from } from "@submodule/core";
 import { protectedProcedure, router } from "../trpc";
-import { services } from "@/services";
+import { services } from "../../services";
 
 export const todoRoutes = router({
-  list: protectedProcedure.query(async ({ ctx }) => from(services).execute(({ todo }) => {
+  list: protectedProcedure.query(services.prepare(({ todo }, { ctx }) => {
     return todo.listTodo(ctx.user)
   }))
 })

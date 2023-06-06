@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  
+  up:
+    deps:
+      - :fe:d
+      - :be:d

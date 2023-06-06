@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "strict": false, // to support zod
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "moduleResolution": "nodenext",
+    "strictNullChecks": true, // to support zod
   }
 }

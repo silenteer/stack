@@ -37,3 +37,18 @@ Rule of thumb
 - `feat: [Ticket refer] description of feature goes here` 
 - `fix: [Ticket refer] description of bugfix goes here`
 - `chore: [Ticket refer] update CI/CD, docs etc` 
+
+# Getting started
+
+## Install necessary tools
+
+- Install vscode
+- Install taskfile
+- Install nodejs version >= 16
+- Yarn 2 is needed
+- Install docker and docker compose
+
+## Start dev flow
+
+- `yarn install`
+- 

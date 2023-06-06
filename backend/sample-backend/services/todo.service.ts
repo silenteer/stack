@@ -1,6 +1,6 @@
 import { from } from "@submodule/core";
 import { prismaService } from "./prisma.service";
-import { User } from "@/prisma/client";
+import { User } from "../prisma/client";
 
 export const todoService = from(prismaService)
   .provide(client => {

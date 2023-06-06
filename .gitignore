@@ -19,3 +19,6 @@
 
 # Mac specific
 **/.DS_Store
+
+# taskfile specific
+.task

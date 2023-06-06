@@ -1,0 +1,19 @@
+version: 3
+
+tasks:
+  build:
+    aliases: [b]
+    dir: frontend/sample-app
+    cmds:
+      - yarn build
+    sources:
+      - "!.next/*"
+      - "*/**/.ts"
+      - "*/**/.tsx"
+    generates:
+      - .next/*
+
+  dev:
+    aliases: [d]
+    cmds:
+      - yarn workspace @sample/app dev

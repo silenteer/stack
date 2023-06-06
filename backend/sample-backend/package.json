@@ -4,7 +4,7 @@
   "dependencies": {
     "@fastify/websocket": "^8.1.0",
     "@prisma/client": "4.15.0",
-    "@submodule/core": "^4.2.1",
+    "@submodule/core": "^4.3.0",
     "@trpc/server": "^10.29.1",
     "fastify": "^4.17.0",
     "prisma": "^4.15.0",
@@ -13,6 +13,7 @@
   },
   "types": "server/index.ts",
   "scripts": {
+    "dev": "tsx main",
     "postinstall": "yarn generate",
     "generate": "prisma generate",
     "studio": "prisma studio",
