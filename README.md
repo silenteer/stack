@@ -52,4 +52,4 @@ Rule of thumb
 
 - `yarn install`
 - `task dev:prep` to install yarn and run upfront tasks
-- `task:dev` to start development
+- `task dev:up` to start development
