@@ -2,7 +2,7 @@ version: '3'
 
 tasks:
   
-  pre:
+  prep:
     cmds:
       - yarn install
       - task: :be:m
