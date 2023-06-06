@@ -2,6 +2,11 @@ version: '3'
 
 tasks:
   
+  pre:
+    cmds:
+      - yarn install
+      - :be:m
+
   up:
     deps:
       - :fe:d
