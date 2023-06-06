@@ -5,7 +5,7 @@ tasks:
   pre:
     cmds:
       - yarn install
-      - :be:m
+      - task: :be:m
 
   up:
     deps:
