@@ -5,7 +5,7 @@ This repository is the mono repository for the Silentium node.js stack.
 # Tooling
 
 ## Monorepository
-Garrio Calendar utilizes `yarn` to manage its mono repo
+Stack utilizes `yarn` to manage its mono repo and [taskdev](https://taskfile.dev/) to organize operations
 
 Projects within `backend`, `frontend`, and `shared` will be automatically added to the workspace.
 

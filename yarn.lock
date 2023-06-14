@@ -1827,14 +1827,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backend/calendar@workspace:backend/calendar":
-  version: 0.0.0-use.local
-  resolution: "@backend/calendar@workspace:backend/calendar"
-  dependencies:
-    "@submodule/core": ^4.1.0
-  languageName: unknown
-  linkType: soft
-
 "@base2/pretty-print-object@npm:1.0.1":
   version: 1.0.1
   resolution: "@base2/pretty-print-object@npm:1.0.1"
@@ -3622,15 +3614,6 @@ __metadata:
     "@types/express": ^4.7.0
     file-system-cache: ^2.0.0
   checksum: 54a1c962bf91dcb129af27fc2fd2d2bc7e4d66bd026109c3b2fa62b2e4e538678b72e6855ab25d4cd26fda1eba81f3e55aed5cfaeb8de9856e7ee707bbf436bd
-  languageName: node
-  linkType: hard
-
-"@submodule/core@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@submodule/core@npm:4.1.0"
-  dependencies:
-    debug: ^4.3.4
-  checksum: abdaef0e6f32402437e23640d5e55b1090a906a2007c09023a84f78d9a42169edc3cb40bfc16cd773eca1f62e1685afc36292c772a922c9e2ff921b2dbf2f935
   languageName: node
   linkType: hard
 
