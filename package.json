@@ -8,7 +8,8 @@
     "shared/*"
   ],
   "dependencies": {
-    "@submodule/core": "^4.3.0",
+    "@submodule/core": "^4.6.0",
+    "taze": "^0.10.2",
     "tsup": "^6.7.0"
   }
 }

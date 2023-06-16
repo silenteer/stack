@@ -1,4 +1,4 @@
-import { from } from "@submodule/core"
+import { execute } from "@submodule/core"
 import { config } from "./config"
 
 import { CreateFastifyContextOptions, fastifyTRPCPlugin } from '@trpc/server/adapters/fastify'
@@ -10,7 +10,7 @@ function createContext({ req, res }: CreateFastifyContextOptions) {
   return { req, res };
 }
 
-from(config).execute(async config => {
+execute(async config => {
   const server = fastify({
     // server param
   })
@@ -30,4 +30,4 @@ from(config).execute(async config => {
   })
 
   console.log('server is listening at port', config.server.port)
-})
+}, config)
