@@ -1,0 +1,17 @@
+{
+  "name": "@stack/prisma",
+  "packageManager": "yarn@3.6.0",
+  "dependencies": {
+    "@prisma/client": "^5.1.1",
+    "@submodule/core": "^4.6.2",
+    "prisma": "^5.1.1"
+  },
+  "main": "prisma.service.ts",
+  "types": "prisma.service.ts",
+  "scripts": {
+    "postinstall": "yarn generate",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "migrate:dev": "prisma migrate dev"
+  }
+}

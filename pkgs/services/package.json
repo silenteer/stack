@@ -1,0 +1,8 @@
+{
+  "name": "@stack/services",
+  "packageManager": "yarn@3.6.0",
+  "types": "index.ts",
+  "dependencies": {
+    "@stack/prisma": "workspace:^"
+  }
+}

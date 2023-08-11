@@ -1,15 +1,19 @@
 {
   "private": true,
-  "name": "cal",
+  "name": "stack",
   "packageManager": "yarn@3.6.0",
   "workspaces": [
     "frontend/*",
     "backend/*",
-    "shared/*"
+    "apps/*",
+    "shared/*",
+    "pkgs/*"
   ],
   "dependencies": {
-    "@submodule/core": "^4.6.0",
-    "taze": "^0.10.2",
+    "@stack/prisma": "workspace:^",
+    "@stack/services": "workspace:^",
+    "@submodule/core": "^4.6.2",
+    "taze": "^0.10.3",
     "tsup": "^6.7.0"
   }
 }
