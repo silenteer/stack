@@ -8,7 +8,7 @@ type TodosController = {
   removeElementFromSidebar: (element: ReactNode) => void
 }
 
-const todosContext = createContext<TodosController>({} as any)
+const TodosContext = createContext<TodosController>({} as any)
 
 export default function Todos() {
   const [userId, setUserId] = useState<string>('')
@@ -19,7 +19,7 @@ export default function Todos() {
   })
 
   return <>
-    <todosContext.Provider value={{
+    <TodosContext.Provider value={{
       addElementToSidebar: (element) => {
         setExtraElements((elements) => [...elements, element])
       },
@@ -43,7 +43,7 @@ export default function Todos() {
         </Flex>
       </Flex>
       {userId !== '' && <TodoList userId={userId} />}
-    </todosContext.Provider>
+    </TodosContext.Provider>
   </>
 }
 
@@ -60,7 +60,7 @@ type Controller = {
 const TodoListContext = createContext<{ screenState: ScreenState, controller: Controller }>({} as any)
 
 const TodoList = ({ userId }: { userId: string }) => {
-  const { addElementToSidebar, removeElementFromSidebar } = useContext(todosContext)
+  const { addElementToSidebar, removeElementFromSidebar } = useContext(TodosContext)
 
   const [screenState, setScreenState] = useState<ScreenState>({ state: 'default', userId })
   const controller = {
@@ -96,7 +96,6 @@ const TodoList = ({ userId }: { userId: string }) => {
       })
     },
     onSuccess: (r) => {
-      console.log(r)
       getTodosQuery.refetch()
     },
     onError: (e) => console.log(e)
