@@ -4,8 +4,8 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 type TodosController = {
-  addElementToSidebar: (element: JSX.Element) => void
-  removeElementFromSidebar: (element: JSX.Element) => void
+  addElementToSidebar: (element: ReactNode) => void
+  removeElementFromSidebar: (element: ReactNode) => void
 }
 
 const todosContext = createContext<TodosController>({} as any)
