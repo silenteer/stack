@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { svcs } from '../../../services'
 import { z } from "zod"
-import { create } from '@submodule/core'
+import { combine, create } from '@submodule/core'
 
 const schemas = {
   createTodo: z.object({
@@ -72,11 +72,40 @@ const handlers = create(async ({ userService, todoService }) => {
   }
 }, svcs)
 
+const middleware = create(async ({ svcs, handlers }) => {
+  return async <T extends Parameters<typeof handler>>(...params: T) => {
+    try {
+
+      const result = await handlers.apply(undefined, params)
+      
+      return result
+    } catch(e) {
+      console.log(e)
+      throw e
+    }
+  }
+}, combine({ svcs, handlers }))
+
+const requestLogger = create(async (handlers) => {
+  return async <T extends Parameters<typeof handler>>(...params: T) => {
+    try {
+      console.time('request')
+      console.log('before request')
+      const result = await handlers.apply(undefined, params)
+      console.timeEnd('request')
+      return result
+    } catch(e) {
+      console.log(e)
+      throw e
+    }
+  }
+}, middleware)
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const handler = await handlers.get()
+  const handler = await requestLogger.get()
   await handler(req, res)
     .catch(e => {
       res.status(500).end()
