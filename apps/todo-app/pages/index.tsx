@@ -16,6 +16,7 @@ export default function Todos() {
   const getUsersQuery = useQuery({
     queryKey: ['users'],
     queryFn: getUsers
+    
   })
 
   return <>
