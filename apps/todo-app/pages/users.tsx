@@ -1,24 +1,10 @@
 import { AlertDialog, Button, Dialog, Flex, Switch, Table, Text, TextField } from "@radix-ui/themes";
 import type { User } from "@stack/prisma";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { createUser, getUsers, updateUser, deleteUser } from "../resources";
 
-type ScreenState =
-  | { state: 'default' }
-  | { state: 'creating' }
-  | { state: 'editing', user: User }
-  | { state: 'removing', user: User }
-
-type Controller = {
-  state: ScreenState
-  toCreate: () => void
-  toEdit: (user: User) => void
-  toDefault: (param: { refetch?: boolean }) => void
-  toRemove: (user: User) => void
-}
-
-const ControllerContext = React.createContext<Controller>({} as any)
+import { useStage, dispatch, useListen } from "./users.stager";
 
 export default function Users() {
   const getUsersQuery = useQuery({
@@ -26,84 +12,64 @@ export default function Users() {
     queryFn: getUsers
   })
 
-  const [screenState, setScreenState] = useState<ScreenState>({ state: 'default' })
-
+  const { stage, context } = useStage()
+  useListen('default', ({ context }) => {
+    if (context?.refetch) getUsersQuery.refetch()
+  })
 
   return <>
-    <ControllerContext.Provider value={{
-      state: screenState,
-      toCreate: () => setScreenState({ state: 'creating' }),
-      toEdit: (user) => setScreenState({ state: 'editing', user }),
-      toDefault: ({ refetch }) => {
-        setScreenState({ state: 'default' })
-        refetch && getUsersQuery.refetch()
-      },
-      toRemove: (user) => {
-        setScreenState({ state: 'removing', user })
-      }
-    }}>
-      <ControllerContext.Consumer>
-        {({ state, toCreate, toEdit, toRemove }) => <>
-          <Flex direction="row-reverse">
-            <Button onClick={() => toCreate()}>Create user</Button>
-          </Flex>
+    <Flex direction="row-reverse">
+      <Button onClick={() => dispatch('toCreating')}>Create user</Button>
+    </Flex>
 
-          <Table.Root>
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeaderCell>id</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>username</Table.ColumnHeaderCell>
-                <Table.ColumnHeaderCell>actions</Table.ColumnHeaderCell>
-              </Table.Row>
-            </Table.Header>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeaderCell>id</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>username</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>actions</Table.ColumnHeaderCell>
+        </Table.Row>
+      </Table.Header>
 
-            <Table.Body>
-              {getUsersQuery.isSuccess
-                ? getUsersQuery.data.map(user => <>
-                  <Table.Row key={user.id}>
-                    <Table.RowHeaderCell>{user.id}</Table.RowHeaderCell>
-                    <Table.Cell>{user.username}</Table.Cell>
-                    <Table.Cell>
-                      <Flex gap="2">
-                      <Button 
-                        variant="outline" 
-                        color="blue"
-                        onClick={(e) => {
-                          toEdit(user)
-                        }}
-                      >Edit</Button>
-                      {!user.isDeteled && <Button 
-                        variant="outline" 
-                        color="red"
-                        onClick={(e) => {
-                          toRemove(user)
-                        }}
-                      >Delete</Button>}
-                      </Flex>
-                    </Table.Cell>
-                  </Table.Row>
-                </>)
-                : undefined}
-            </Table.Body>
-          </Table.Root>
+      <Table.Body>
+        {getUsersQuery.isSuccess
+          && getUsersQuery.data.map(user => <>
+            <Table.Row key={user.id}>
+              <Table.RowHeaderCell>{user.id}</Table.RowHeaderCell>
+              <Table.Cell>{user.username}</Table.Cell>
+              <Table.Cell>
+                <Flex gap="2">
+                  <Button
+                    variant="outline"
+                    color="blue"
+                    onClick={(e) => {
+                      dispatch('toEditing', user)
+                    }}
+                  >Edit</Button>
+                  {!user.isDeteled && <Button
+                    variant="outline"
+                    color="red"
+                    onClick={(e) => {
+                      dispatch('toRemoving', user)
+                    }}
+                  >Delete</Button>}
+                </Flex>
+              </Table.Cell>
+            </Table.Row>
+          </>)}
+      </Table.Body>
+    </Table.Root>
 
-          {screenState.state === 'creating' && <CreateUserDialog />}
-          {screenState.state === 'editing' && <EditUserDialog {...screenState.user} />}
-          {screenState.state === 'removing' && <RemoveUserDialog {...screenState.user} />}
-        </>}
-      </ControllerContext.Consumer>
-    </ControllerContext.Provider>
+    {stage === 'creating' && <CreateUserDialog />}
+    {stage === 'editing' && <EditUserDialog {...context.editingUser} />}
+    {stage === 'removing' && <RemoveUserDialog {...context.deletingUser} />}
   </>
 }
 
 const CreateUserDialog = () => {
-  const controller = useContext(ControllerContext)
-
   const createUserMutation = useMutation({
     mutationFn: createUser,
-    onSuccess: async (r) => {
-      controller.toDefault({ refetch: true })
-    }
+    onSuccess: async (r) => { await dispatch('finish') }
   })
 
   const [username, setUsername] = useState<string>("")
@@ -129,7 +95,7 @@ const CreateUserDialog = () => {
           </label>
         </Flex>
         <Flex gap="3" mt="4" justify="end">
-          <Button onClick={() => controller.toDefault({ refetch: false })} variant="soft" color="gray">
+          <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
             Cancel
           </Button>
           <Button
@@ -142,13 +108,9 @@ const CreateUserDialog = () => {
 }
 
 const EditUserDialog = (user: User) => {
-  const controller = useContext(ControllerContext)
-
   const editUserMutation = useMutation({
     mutationFn: updateUser,
-    onSuccess: async (r) => {
-      controller.toDefault({ refetch: true })
-    }
+    onSuccess: async (r) => { await dispatch('finish') }
   })
 
   const [username, setUsername] = useState<string>(user.username)
@@ -175,7 +137,7 @@ const EditUserDialog = (user: User) => {
         </Flex>
 
         <Flex gap="3" mt="4" justify="end">
-          <Button onClick={() => controller.toDefault({ refetch: false })} variant="soft" color="gray">
+          <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
             Cancel
           </Button>
           <Button
@@ -188,11 +150,10 @@ const EditUserDialog = (user: User) => {
 }
 
 const RemoveUserDialog = (user: User) => {
-  const controller = useContext(ControllerContext)
   const removeUserMutation = useMutation({
     mutationFn: deleteUser,
-    onSuccess: () => {
-      controller.toDefault({ refetch: true })
+    onSuccess: async () => {
+      await dispatch('finish')
     }
   })
 
@@ -204,11 +165,11 @@ const RemoveUserDialog = (user: User) => {
       </AlertDialog.Description>
 
       <Flex gap="3" mt="4" justify="end">
-        <Button onClick={() => controller.toDefault({ refetch: false })} variant="soft" color="gray">
+        <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
           Cancel
         </Button>
-        <Button 
-          disabled={removeUserMutation.isLoading} 
+        <Button
+          disabled={removeUserMutation.isLoading}
           onClick={() => removeUserMutation.mutate(user.id)}
           variant="solid" color="red">
           Remove {user.username}
