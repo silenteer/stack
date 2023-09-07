@@ -13,7 +13,7 @@ type Stages =
   | Stage<{ stage: 'editing', context: DefaultContext & { editingUser: User } }>
   | Stage<{ stage: 'removing', context: DefaultContext & { deletingUser: User } }>
 
-export const { useLifecycle, useListen, useStage, dispatch, reset, transitioningFrom } = create<Stages>()
+export const { withStager, useListen, useStage, dispatch, reset, transitioningFrom } = create<Stages>()
   .transition({
     name: 'toDefault',
     from: ['idle', 'default'],
@@ -27,9 +27,9 @@ export const { useLifecycle, useListen, useStage, dispatch, reset, transitioning
     name: 'toCreating',
     from: 'default',
     to: 'creating',
-    async execution(ctx) {
+    async execution({ context }) {
       return { stage: 'creating', context: { 
-        ...ctx.stage.context, 
+        ...context, 
         creatingUser: { username: ''}
       } 
     }}
@@ -38,81 +38,84 @@ export const { useLifecycle, useListen, useStage, dispatch, reset, transitioning
     name: 'updateCreatingField',
     from: 'creating',
     to: 'creating',
-    async execution(ctx, field: keyof Pick<User, 'username'>, value: User[typeof field]) {
-      const creatingUser = ctx.stage.context.creatingUser
+    async execution({ context }, field: keyof Pick<User, 'username'>, value: User[typeof field]) {
+      const creatingUser = context.creatingUser
       creatingUser[field] = value
 
-      return { stage: 'creating', context: { ...ctx.stage.context, creatingUser}}
+      return { stage: 'creating', context: { ...context, creatingUser}}
     }
   })
   .transition({
     name: 'createUser',
     from: 'creating',
     to: ['creating', 'default'],
-    async execution(ctx) {
-      if (ctx.stage.context.creatingUser.username.trim().length == 0) {
-        return { stage: 'creating', context: ctx.stage.context }
+    async execution({ context }) {
+      if (context.creatingUser.username.trim().length == 0) {
+        return { stage: 'creating', context }
       }
 
-      await createUser({ username: ctx.stage.context.creatingUser.username})
-      return { stage: 'default', context: { users: ctx.stage.context.users, refetch: true }}
+      await createUser({ username: context.creatingUser.username})
+      return { stage: 'default', context: { users: context.users, refetch: true }}
     }
   })
   .transition({
     name: 'toEditing',
     from: 'default',
     to: 'editing',
-    execution(ctx, user: User) {
-      return { stage: 'editing', context: { ...ctx.stage.context, editingUser: user } }
+    execution({ context }, user: User) {
+      return { stage: 'editing', context: { ...context, editingUser: user } }
     }
   })
   .transition({
     name: 'updateEditingField',
     from: 'editing',
     to: 'editing',
-    async execution(ctx, field: keyof Pick<User, 'username'>, value: User[typeof field]) {
-      const editingUserUser = ctx.stage.context.editingUser
+    async execution({ context }, field: keyof Pick<User, 'username'>, value: User[typeof field]) {
+      const editingUserUser = context.editingUser
       editingUserUser[field] = value
 
-      return { stage: 'editing', context: { ...ctx.stage.context, editingUserUser}}
+      return { stage: 'editing', context: { ...context, editingUserUser}}
     }
   })
   .transition({
     name: 'updateUser',
     from: 'editing',
     to: ['editing', 'default'],
-    async execution(ctx) {
-      const updatingUser = ctx.stage.context.editingUser
+    async execution({ context }) {
+      const updatingUser = context.editingUser
       if (updatingUser.username.trim().length === 0) {
-        return { stage: 'editing', context: ctx.stage.context }
+        return { stage: 'editing', context: context }
       }
 
       // can catch here to display error message, client side validation
       await updateUser(updatingUser)
       // can catch here to display error message, server side validation
-      return { stage: 'default', context: { users: ctx.stage.context.users, refetch: true }}
+      return { stage: 'default', context: { users: context.users, refetch: true }}
     }
   })
   .transition({
     name: 'toRemoving',
     from: 'default',
     to: 'removing',
-    execution(ctx, user: User) {
-      return { stage: 'removing', context: { ...ctx.stage.context, deletingUser: user } }
+    execution({ context }, user: User) {
+      return { stage: 'removing', context: { ...context, deletingUser: user } }
     }
   })
   .transition({
     name: 'removeUser',
     from: 'removing',
     to: 'default',
-    async execution(ctx) {
+    async execution({ context }) {
       await new Promise(resolve => {
         setTimeout(() => { resolve(null) }, 1000)
       })
       
-      await deleteUser(ctx.stage.context.deletingUser.id)
-      return { stage: 'default', context: { users: ctx.stage.context.users, refetch: true }}
+      await deleteUser(context.deletingUser.id)
+      return { stage: 'default', context: { users: context.users, refetch: true }}
     }
+  })
+  .on('idle', async (_, dispatch) => {
+    dispatch('toDefault')
   })
   .on('default', async ({ context }) => {
     if (context.refetch) {
@@ -123,8 +126,8 @@ export const { useLifecycle, useListen, useStage, dispatch, reset, transitioning
     name: 'cancel',
     from: ['creating', 'editing', 'removing'],
     to: 'default',
-    execution(ctx) {
-      return { stage: 'default', context: ctx.stage.context }
+    execution({ context }) {
+      return { stage: 'default', context: context }
     }
   })
   .build({ initialStage: { stage: 'idle', context: undefined } })

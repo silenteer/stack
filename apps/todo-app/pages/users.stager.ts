@@ -7,7 +7,7 @@ type Stages =
   | Stage<{ stage: 'editing', context: { editingUser: User } }>
   | Stage<{ stage: 'removing', context: { deletingUser: User } }>
 
-export const { useLifecycle, useListen, useStage, dispatch } = create<Stages>()
+export const { withStager, useListen, useStage, dispatch } = create<Stages>()
   .transition({
     name: 'toCreating',
     from: 'default',

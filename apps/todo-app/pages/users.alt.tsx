@@ -1,14 +1,9 @@
 import { AlertDialog, Button, Dialog, Flex, Table, Text, TextField } from "@radix-ui/themes";
 import React, { useEffect } from "react";
-import { useStage, dispatch, reset, transitioningFrom } from "./users.stager.alt";
+import { withStager, useStage, dispatch, reset, transitioningFrom } from "./users.stager.alt";
 
-export default function Users() {
+export default withStager(function Users() {
   const { stage, context } = useStage()
-
-  useEffect(() => { 
-    dispatch('toDefault')
-    return reset
-  }, [])
 
   return <>
     <Flex direction="row-reverse">
@@ -56,7 +51,7 @@ export default function Users() {
     <EditUserDialog />
     <RemoveUserDialog />
   </>
-}
+})
 
 const CreateUserDialog = () => {
   const { stage, context } = useStage()

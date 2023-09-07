@@ -6,7 +6,7 @@ export const createUser = async (user: Pick<User, 'username'>) => {
     headers: {
       "content-type": "application/json"
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   }).then(async r => await r.json() as User)
 }
 

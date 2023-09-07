@@ -4,9 +4,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { createUser, getUsers, updateUser, deleteUser } from "../resources";
 
-import { useStage, dispatch, useListen } from "./users.stager";
+import { withStager, useStage, dispatch, useListen } from "./users.stager";
 
-export default function Users() {
+export default withStager(function Users() {
   const getUsersQuery = useQuery({
     queryKey: ['todos'],
     queryFn: getUsers
@@ -64,7 +64,7 @@ export default function Users() {
     {stage === 'editing' && <EditUserDialog {...context.editingUser} />}
     {stage === 'removing' && <RemoveUserDialog {...context.deletingUser} />}
   </>
-}
+})
 
 const CreateUserDialog = () => {
   const createUserMutation = useMutation({
