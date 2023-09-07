@@ -13,7 +13,7 @@ type Stages =
   | Stage<{ stage: 'editing', context: DefaultContext & { editingUser: User } }>
   | Stage<{ stage: 'removing', context: DefaultContext & { deletingUser: User } }>
 
-export const { withStager, useListen, useStage, dispatch, reset, transitioningFrom } = create<Stages>()
+export const { withStager, useListen, useStage, dispatch, useTransition } = create<Stages>()
   .transition({
     name: 'toDefault',
     from: ['idle', 'default'],

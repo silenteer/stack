@@ -1,6 +1,5 @@
 import { AlertDialog, Button, Dialog, Flex, Table, Text, TextField } from "@radix-ui/themes";
-import React, { useEffect } from "react";
-import { withStager, useStage, dispatch, reset, transitioningFrom } from "./users.stager.alt";
+import { withStager, useStage, dispatch, useTransition  } from "./users.stager.alt";
 
 export default withStager(function Users() {
   const { stage, context } = useStage()
@@ -55,6 +54,8 @@ export default withStager(function Users() {
 
 const CreateUserDialog = () => {
   const { stage, context } = useStage()
+  const { isTransitioning } = useTransition()
+
   if (stage === 'creating') {
     return <>
       <Dialog.Root open={true}>
@@ -81,7 +82,7 @@ const CreateUserDialog = () => {
               Cancel
             </Button>
             <Button
-              disabled={transitioningFrom('creating')}
+              disabled={isTransitioning}
               onClick={() => dispatch('createUser')}>Save</Button>
           </Flex>
         </Dialog.Content>
@@ -93,6 +94,7 @@ const CreateUserDialog = () => {
 
 const EditUserDialog = () => {
   const { stage, context } = useStage()
+  const { isTransitioning } = useTransition()
 
   if (stage === 'editing') {
     return <>
@@ -121,7 +123,7 @@ const EditUserDialog = () => {
               Cancel
             </Button>
             <Button
-              disabled={transitioningFrom('editing')}
+              disabled={isTransitioning}
               onClick={() => dispatch('updateUser')}>Save</Button>
           </Flex>
         </Dialog.Content>
@@ -133,6 +135,8 @@ const EditUserDialog = () => {
 
 const RemoveUserDialog = () => {
   const { stage, context } = useStage()
+  const { isTransitioning } = useTransition()
+
   if (stage === 'removing') {
     return <AlertDialog.Root open>
       <AlertDialog.Content style={{ maxWidth: 450 }}>
@@ -146,7 +150,7 @@ const RemoveUserDialog = () => {
             Cancel
           </Button>
           <Button
-            disabled={transitioningFrom('removing')}
+            disabled={isTransitioning}
             onClick={() => dispatch('removeUser')}
             variant="solid" color="red">
             Remove {context.deletingUser.username}
