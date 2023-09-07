@@ -1,5 +1,12 @@
 import { AlertDialog, Button, Dialog, Flex, Table, Text, TextField } from "@radix-ui/themes";
-import { withStager, useStage, dispatch, useTransition  } from "./users.stager.alt";
+import { userStages } from "../stagers/users.stager.alt";
+
+const {
+  withStager,
+  useStage,
+  useTransition,
+  dispatch
+} = userStages
 
 export default withStager(function Users() {
   const { stage, context } = useStage()

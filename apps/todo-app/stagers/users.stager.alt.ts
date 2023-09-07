@@ -13,14 +13,14 @@ type Stages =
   | Stage<{ stage: 'editing', context: DefaultContext & { editingUser: User } }>
   | Stage<{ stage: 'removing', context: DefaultContext & { deletingUser: User } }>
 
-export const { withStager, useListen, useStage, dispatch, useTransition } = create<Stages>()
+export const userStages = create<Stages>()
   .transition({
     name: 'toDefault',
     from: ['idle', 'default'],
     to: 'default',
     async execution() {
       const users = await getUsers()
-      return { stage: 'default', context: { users }}
+      return { stage: 'default', context: { users } }
     }
   })
   .transition({
@@ -28,11 +28,13 @@ export const { withStager, useListen, useStage, dispatch, useTransition } = crea
     from: 'default',
     to: 'creating',
     async execution({ context }) {
-      return { stage: 'creating', context: { 
-        ...context, 
-        creatingUser: { username: ''}
-      } 
-    }}
+      return {
+        stage: 'creating', context: {
+          ...context,
+          creatingUser: { username: '' }
+        }
+      }
+    }
   })
   .transition({
     name: 'updateCreatingField',
@@ -42,7 +44,7 @@ export const { withStager, useListen, useStage, dispatch, useTransition } = crea
       const creatingUser = context.creatingUser
       creatingUser[field] = value
 
-      return { stage: 'creating', context: { ...context, creatingUser}}
+      return { stage: 'creating', context: { ...context, creatingUser } }
     }
   })
   .transition({
@@ -54,8 +56,8 @@ export const { withStager, useListen, useStage, dispatch, useTransition } = crea
         return { stage: 'creating', context }
       }
 
-      await createUser({ username: context.creatingUser.username})
-      return { stage: 'default', context: { users: context.users, refetch: true }}
+      await createUser({ username: context.creatingUser.username })
+      return { stage: 'default', context: { users: context.users, refetch: true } }
     }
   })
   .transition({
@@ -74,7 +76,7 @@ export const { withStager, useListen, useStage, dispatch, useTransition } = crea
       const editingUserUser = context.editingUser
       editingUserUser[field] = value
 
-      return { stage: 'editing', context: { ...context, editingUserUser}}
+      return { stage: 'editing', context: { ...context, editingUserUser } }
     }
   })
   .transition({
@@ -90,7 +92,7 @@ export const { withStager, useListen, useStage, dispatch, useTransition } = crea
       // can catch here to display error message, client side validation
       await updateUser(updatingUser)
       // can catch here to display error message, server side validation
-      return { stage: 'default', context: { users: context.users, refetch: true }}
+      return { stage: 'default', context: { users: context.users, refetch: true } }
     }
   })
   .transition({
@@ -109,15 +111,16 @@ export const { withStager, useListen, useStage, dispatch, useTransition } = crea
       await new Promise(resolve => {
         setTimeout(() => { resolve(null) }, 1000)
       })
-      
+
       await deleteUser(context.deletingUser.id)
-      return { stage: 'default', context: { users: context.users, refetch: true }}
+      return { stage: 'default', context: { users: context.users, refetch: true } }
     }
   })
   .on('idle', async (_, dispatch) => {
+    if (typeof window !== 'undefined')
     dispatch('toDefault')
   })
-  .on('default', async ({ context }) => {
+  .on('default', async ({ context }, dispatch) => {
     if (context.refetch) {
       dispatch('toDefault')
     }

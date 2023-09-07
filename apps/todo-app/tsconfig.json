@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "../../ops/users.alt.tsx"  ],
   "exclude": [
     "node_modules"
   ]

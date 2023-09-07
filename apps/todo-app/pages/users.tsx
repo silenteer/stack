@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { createUser, getUsers, updateUser, deleteUser } from "../resources";
 
-import { withStager, useStage, dispatch, useListen } from "./users.stager";
+import { withStager, useStage, dispatch, useListen } from "../stagers/users.stager";
 
 export default withStager(function Users() {
   const getUsersQuery = useQuery({

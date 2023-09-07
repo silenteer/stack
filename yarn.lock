@@ -14212,7 +14212,7 @@ __metadata:
     prisma: ^5.1.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    use-stager: ^1.6.2
+    use-stager: ^1.6.5
     valtio: ^1.11.2
     zod: ^3.21.4
   languageName: unknown
@@ -14715,16 +14715,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-stager@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "use-stager@npm:1.6.2"
+"use-stager@npm:^1.6.5":
+  version: 1.6.5
+  resolution: "use-stager@npm:1.6.5"
   dependencies:
     lodash.clonedeep: ^4.5.0
     radix3: ^1.1.0
   peerDependencies:
     react: "*"
     valtio: "*"
-  checksum: 14e34020fbddc2a9bc3124d66b328700ff478b67a1a73e478036390472f412aeab2d10951a9229ea8ab4650a1125f8941d6eea60b9837ff44158a1b95c80a1fa
+  checksum: 8bf0177241e868b33e69c2a32680daa3d6461646f8d4b56d8e034a92511c6ed16fe9afc2278c1ea53b9d2aa5ede637fa294d0fb88321a40680874ce8eceffae3
   languageName: node
   linkType: hard
 
