@@ -32,7 +32,7 @@ const handlers = create(async (userService) => {
       case "DELETE":
         const removeRequest = schemas.removeUserRequest.parse(req.body)
         await userService.removeUser(removeRequest.userId)
-        return res.status(200)
+        return res.status(200).json({})
       case "GET":
       default:
         const users = await userService.listUser()

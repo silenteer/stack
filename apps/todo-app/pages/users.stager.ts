@@ -1,14 +1,13 @@
-import { useEffect } from "react"
 import { User } from "@stack/prisma"
 import { Stage, create } from "use-stager"
 
-type Stages = 
-| Stage<{ stage: 'default', context: undefined | { refetch: true } }>
-| Stage<{ stage: 'creating', context: undefined }>
-| Stage<{ stage: 'editing', context: { editingUser: User }}>
-| Stage<{ stage: 'removing', context: { deletingUser: User }}>
+type Stages =
+  | Stage<{ stage: 'default', context: undefined | { refetch: true } }>
+  | Stage<{ stage: 'creating', context: undefined }>
+  | Stage<{ stage: 'editing', context: { editingUser: User } }>
+  | Stage<{ stage: 'removing', context: { deletingUser: User } }>
 
-export const stageTemplate = create<Stages>()
+export const { useLifecycle, useListen, useStage, dispatch } = create<Stages>()
   .transition({
     name: 'toCreating',
     from: 'default',
@@ -22,7 +21,7 @@ export const stageTemplate = create<Stages>()
     from: 'default',
     to: 'editing',
     execution(ctx, user: User) {
-      return { stage: 'editing', context: { editingUser: user }}
+      return { stage: 'editing', context: { editingUser: user } }
     }
   })
   .transition({
@@ -30,7 +29,7 @@ export const stageTemplate = create<Stages>()
     from: 'default',
     to: 'removing',
     execution(ctx, user: User) {
-      return { stage: 'removing', context: { deletingUser: user }}
+      return { stage: 'removing', context: { deletingUser: user } }
     }
   })
   .transition({
@@ -38,7 +37,7 @@ export const stageTemplate = create<Stages>()
     from: ['creating', 'editing', 'removing'],
     to: 'default',
     execution(ctx) {
-      return { stage: 'default', context: { refetch: true }}
+      return { stage: 'default', context: { refetch: true } }
     }
   })
   .transition({
@@ -50,9 +49,4 @@ export const stageTemplate = create<Stages>()
     }
   })
   .on(['default', 'creating', 'removing', 'editing'], (stage) => console.log(stage))
-
-export const {
-  useStage,
-  useListen,
-  dispatch
-} = stageTemplate.build({ initialStage: { stage: 'default', context: undefined }})
+  .build({ initialStage: { stage: 'default', context: undefined } })
