@@ -14212,7 +14212,8 @@ __metadata:
     prisma: ^5.1.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    use-stager: ^1.6.5
+    typescript: ^5.2.2
+    use-stager: ^1.7.0
     valtio: ^1.11.2
     zod: ^3.21.4
   languageName: unknown
@@ -14470,6 +14471,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "typescript@npm:5.2.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@5.0.4#~builtin<compat/typescript>":
   version: 5.0.4
   resolution: "typescript@patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"
@@ -14477,6 +14488,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: c3f7b80577bddf6fab202a7925131ac733bfc414aec298c2404afcddc7a6f242cfa8395cf2d48192265052e11a7577c27f6e5fac8d8fe6a6602023c83d6b3292
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
+  version: 5.2.2
+  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=5da071"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 303979762f9b8932c53f8149e866521a1265168b5c0fde8cc8ad83ac3d0e8ede8096cb02dff5f2de048e7f118a6f61902f81da12d5972c7fb582f09f2f18d169
   languageName: node
   linkType: hard
 
@@ -14715,16 +14736,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-stager@npm:^1.6.5":
-  version: 1.6.5
-  resolution: "use-stager@npm:1.6.5"
+"use-stager@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "use-stager@npm:1.7.0"
   dependencies:
     lodash.clonedeep: ^4.5.0
     radix3: ^1.1.0
   peerDependencies:
     react: "*"
     valtio: "*"
-  checksum: 8bf0177241e868b33e69c2a32680daa3d6461646f8d4b56d8e034a92511c6ed16fe9afc2278c1ea53b9d2aa5ede637fa294d0fb88321a40680874ce8eceffae3
+  checksum: 206208e3d8a80553886a1b7e9ec962113b6fc36d3a8bf91392f6b61a12cd126ce1e2a9dadcdecf0b926d0392672d1e3d1408cdd5aa083b78c2149f255ea4acaa
   languageName: node
   linkType: hard
 

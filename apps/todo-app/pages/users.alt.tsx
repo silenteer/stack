@@ -1,17 +1,10 @@
 import { AlertDialog, Button, Dialog, Flex, Table, Text, TextField } from "@radix-ui/themes";
 import { userStages } from "../stagers/users.stager.alt";
 
-const {
-  withStager,
-  useStage,
-  useTransition,
-  dispatch
-} = userStages
+const dispatch = userStages.dispatch
 
-export default withStager(function Users() {
-  const { stage, context } = useStage()
-
-  return <>
+export default function Users() {
+  return <userStages.Stager>{({ context, stage }) => <>
     <Flex direction="row-reverse">
       <Button onClick={() => dispatch('toCreating')}>Create user</Button>
     </Flex>
@@ -53,118 +46,99 @@ export default withStager(function Users() {
       </Table.Body>
     </Table.Root>
 
-    <CreateUserDialog />
-    <EditUserDialog />
-    <RemoveUserDialog />
-  </>
-})
+    <userStages.Stage stage="creating">
+      {({ context, transition }) =>
+        <Dialog.Root open={true}>
+          <Dialog.Content style={{ maxWidth: 450 }}>
+            <Dialog.Title>Create user</Dialog.Title>
+            <Dialog.Description size="2" mb="4">
+              Create your first user
+            </Dialog.Description>
 
-const CreateUserDialog = () => {
-  const { stage, context } = useStage()
-  const { isTransitioning } = useTransition()
+            <Flex direction="column" gap="3">
+              <label>
+                <Text as="div" size="2" mb="1" weight="bold">
+                  Name
+                </Text>
+                <TextField.Input
+                  value={context.creatingUser.username}
+                  onChange={(e) => dispatch('updateCreatingField', 'username', e.target.value)}
+                  placeholder="Enter username"
+                />
+              </label>
+            </Flex>
+            <Flex gap="3" mt="4" justify="end">
+              <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
+                Cancel
+              </Button>
+              <Button
+                disabled={transition.isTransitioning}
+                onClick={() => dispatch('createUser')}>Save</Button>
+            </Flex>
+          </Dialog.Content>
+        </Dialog.Root>
+      }
+    </userStages.Stage>
 
-  if (stage === 'creating') {
-    return <>
-      <Dialog.Root open={true}>
-        <Dialog.Content style={{ maxWidth: 450 }}>
-          <Dialog.Title>Create user</Dialog.Title>
-          <Dialog.Description size="2" mb="4">
-            Create your first user
-          </Dialog.Description>
+    <userStages.Stage stage="editing">
+      {({ context, transition }) => <>
+        <Dialog.Root open>
+          <Dialog.Content style={{ maxWidth: 450 }}>
+            <Dialog.Title>Edit user</Dialog.Title>
+            <Dialog.Description size="2" mb="4">
+              Change information of {context.editingUser.username}
+            </Dialog.Description>
 
-          <Flex direction="column" gap="3">
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Name
-              </Text>
-              <TextField.Input
-                value={context.creatingUser.username}
-                onChange={(e) => dispatch('updateCreatingField', 'username', e.target.value)}
-                placeholder="Enter username"
-              />
-            </label>
-          </Flex>
-          <Flex gap="3" mt="4" justify="end">
-            <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
-              Cancel
-            </Button>
-            <Button
-              disabled={isTransitioning}
-              onClick={() => dispatch('createUser')}>Save</Button>
-          </Flex>
-        </Dialog.Content>
-      </Dialog.Root>
-    </>
-  }
-  return null
-}
+            <Flex direction="column" gap="3">
+              <label>
+                <Text as="div" size="2" mb="1" weight="bold">
+                  Name
+                </Text>
+                <TextField.Input
+                  value={context.editingUser.username}
+                  onChange={(e) => dispatch('updateEditingField', 'username', e.target.value)}
+                  placeholder="Enter username"
+                />
+              </label>
+            </Flex>
 
-const EditUserDialog = () => {
-  const { stage, context } = useStage()
-  const { isTransitioning } = useTransition()
+            <Flex gap="3" mt="4" justify="end">
+              <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
+                Cancel
+              </Button>
+              <Button
+                disabled={transition.isTransitioning}
+                onClick={() => dispatch('updateUser')}>Save</Button>
+            </Flex>
+          </Dialog.Content>
+        </Dialog.Root>
+      </>}
+    </userStages.Stage>
 
-  if (stage === 'editing') {
-    return <>
-      <Dialog.Root open>
-        <Dialog.Content style={{ maxWidth: 450 }}>
-          <Dialog.Title>Edit user</Dialog.Title>
-          <Dialog.Description size="2" mb="4">
-            Change information of {context.editingUser.username}
-          </Dialog.Description>
+    <userStages.Stage stage="removing">
+      {({ context, transition }) => <>
+        <AlertDialog.Root open>
+          <AlertDialog.Content style={{ maxWidth: 450 }}>
+            <AlertDialog.Title>Revoke access</AlertDialog.Title>
+            <AlertDialog.Description size="2">
+              Are you sure to remove {context.deletingUser.username}? This action cannot be undone.
+            </AlertDialog.Description>
 
-          <Flex direction="column" gap="3">
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Name
-              </Text>
-              <TextField.Input
-                value={context.editingUser.username}
-                onChange={(e) => dispatch('updateEditingField', 'username', e.target.value)}
-                placeholder="Enter username"
-              />
-            </label>
-          </Flex>
-
-          <Flex gap="3" mt="4" justify="end">
-            <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
-              Cancel
-            </Button>
-            <Button
-              disabled={isTransitioning}
-              onClick={() => dispatch('updateUser')}>Save</Button>
-          </Flex>
-        </Dialog.Content>
-      </Dialog.Root>
-    </>
-  }
-  return null
-}
-
-const RemoveUserDialog = () => {
-  const { stage, context } = useStage()
-  const { isTransitioning } = useTransition()
-
-  if (stage === 'removing') {
-    return <AlertDialog.Root open>
-      <AlertDialog.Content style={{ maxWidth: 450 }}>
-        <AlertDialog.Title>Revoke access</AlertDialog.Title>
-        <AlertDialog.Description size="2">
-          Are you sure to remove {context.deletingUser.username}? This action cannot be undone.
-        </AlertDialog.Description>
-
-        <Flex gap="3" mt="4" justify="end">
-          <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
-            Cancel
-          </Button>
-          <Button
-            disabled={isTransitioning}
-            onClick={() => dispatch('removeUser')}
-            variant="solid" color="red">
-            Remove {context.deletingUser.username}
-          </Button>
-        </Flex>
-      </AlertDialog.Content>
-    </AlertDialog.Root>
-  } 
-  return null
+            <Flex gap="3" mt="4" justify="end">
+              <Button onClick={() => dispatch('cancel')} variant="soft" color="gray">
+                Cancel
+              </Button>
+              <Button
+                disabled={transition.isTransitioning}
+                onClick={() => dispatch('removeUser')}
+                variant="solid" color="red">
+                Remove {context.deletingUser.username}
+              </Button>
+            </Flex>
+          </AlertDialog.Content>
+        </AlertDialog.Root>
+      </>}
+    </userStages.Stage>
+  </>}
+  </userStages.Stager>
 }
