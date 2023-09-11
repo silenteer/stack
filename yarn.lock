@@ -5394,6 +5394,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@submodule/core@npm:^5.0.0-rc.0":
+  version: 5.0.0-rc.0
+  resolution: "@submodule/core@npm:5.0.0-rc.0"
+  checksum: e0d08c27a988a3469f8445b2f127ac07046b82d461502c81c35b835770fb1b62899a4620dc0d3b5570cce673280feba81da34fbff74af29453f0f3b5cda5dc66
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.5.1":
   version: 0.5.1
   resolution: "@swc/helpers@npm:0.5.1"
@@ -14206,7 +14213,7 @@ __metadata:
     "@prisma/nextjs-monorepo-workaround-plugin": ^5.1.1
     "@radix-ui/themes": ^1.0.0
     "@stack/services": "workspace:^"
-    "@submodule/core": ^4.6.2
+    "@submodule/core": ^5.0.0-rc.0
     "@tanstack/react-query": ^4.32.6
     next: ^13.4.13
     prisma: ^5.1.1
