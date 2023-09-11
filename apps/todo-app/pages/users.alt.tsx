@@ -1,5 +1,5 @@
 import { AlertDialog, Button, Dialog, Flex, Table, Text, TextField } from "@radix-ui/themes";
-import { userStages } from "../stagers/users.stager.alt";
+import { userStages } from "~/stagers/users.stager.alt";
 
 export default function Users() {
   return <userStages.Stager>

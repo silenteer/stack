@@ -1,6 +1,6 @@
 import { User } from "@stack/prisma"
 import { Stage, create } from "use-stager"
-import { createUser, getUsers, updateUser, deleteUser } from "../resources";
+import { createUser, getUsers, updateUser, deleteUser } from "~/resources";
 
 type DefaultContext = {
   users: Array<User>

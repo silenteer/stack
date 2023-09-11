@@ -1,6 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { z } from "zod"
-import { createRoute } from '../../../rest'
+import { createRoute } from "~/rest"
 
 const schemas = {
   createTodo: z.object({

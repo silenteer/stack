@@ -1,5 +1,5 @@
 import { Button, Dialog, Flex, Select, Table, TextField, Text, Checkbox } from "@radix-ui/themes";
-import { addTodo, getTodos, getUsers, updateTodo } from "../resources";
+import { addTodo, getTodos, getUsers, updateTodo } from "~/resources";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
