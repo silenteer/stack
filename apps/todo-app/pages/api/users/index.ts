@@ -16,7 +16,7 @@ const schemas = {
   })
 }
 
-const handlers = createRoute(async ({ userService }, req, res) => {
+export default createRoute(async ({ userService }, req, res) => {
   switch (req.method) {
     case "POST":
       const createUserData = schemas.createUser.parse(req.body)
@@ -36,10 +36,3 @@ const handlers = createRoute(async ({ userService }, req, res) => {
       return res.json(users)
   }
 })
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  return await handlers(req, res)
-}

@@ -18,7 +18,7 @@ const schemas = {
   })
 }
 
-const handlers = createRoute(async ({ userService, todoService }, req, res) => {
+export default createRoute(async ({ userService, todoService }, req, res) => {
   switch (req.method) {
     case "POST": {
       const createTodoData = schemas.createTodo.parse(req.body)
@@ -68,10 +68,3 @@ const handlers = createRoute(async ({ userService, todoService }, req, res) => {
     }
   }
 })
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  return await handlers(req, res)
-}
