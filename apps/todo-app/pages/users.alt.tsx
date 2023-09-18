@@ -2,7 +2,7 @@ import { AlertDialog, Button, Dialog, Flex, Table, Text, TextField } from "@radi
 import { userStages } from "~/stagers/users.stager.alt";
 
 export default function Users() {
-  return <userStages.Stager>
+  return <userStages.Stager initialStage={{ stage: 'idle', context: undefined }}>
     {({ context, stage, transition, dispatch }) => <>
       <Flex direction="row-reverse">
         <Button onClick={() => dispatch('toCreating')}>Create user</Button>

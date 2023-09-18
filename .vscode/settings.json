@@ -11,5 +11,6 @@
       "**/Taskfile.yml",
       "ops/**/*.yml"
     ]
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

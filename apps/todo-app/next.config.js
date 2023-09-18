@@ -10,6 +10,7 @@ const nextConfig = {
 
     return config
   },
+  typescript: {}
 }
  
 module.exports = nextConfig
