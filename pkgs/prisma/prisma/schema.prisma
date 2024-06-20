@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres@localhost:5432"
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
 }
 
 model User {
@@ -22,6 +22,6 @@ model Todo {
   content String
   done    Boolean @default(false)
 
-  user User @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   isDeteled Boolean @default(false)
 }

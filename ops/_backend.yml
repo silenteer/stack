@@ -1,16 +1,15 @@
 version: 3
 
 tasks:
-
   migrate:
     aliases: [m]
-    dir: backend/sample-backend
+    dir: pkgs/prisma
     cmds:
       - yarn prisma migrate dev
 
   prisma:
     aliases: [p]
-    dir: backend/sample-backend
+    dir: pkgs/prisma
     sources:
       - prisma/schema.prisma
       - package.json

@@ -15,5 +15,6 @@ tasks:
 
   dev:
     aliases: [d]
+    dir: apps/todo-app
     cmds:
-      - yarn workspace @sample/app dev
+      - yarn dev

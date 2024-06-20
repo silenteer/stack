@@ -4111,6 +4111,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@silenteer/stato@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@silenteer/stato@npm:1.2.2"
+  dependencies:
+    radix3: ^1.1.2
+  peerDependencies:
+    react: ^18.0.0
+    typescript: ^5.4.0
+  checksum: 895541e5bd8436e9422719345094125ba9b0653864487866c1c026c498fd67a8acf663549da6c4ffff0d9002936ab5608ee191472f50662edc43d20569d9221a
+  languageName: node
+  linkType: hard
+
 "@sinclair/typebox@npm:^0.25.16":
   version: 0.25.24
   resolution: "@sinclair/typebox@npm:0.25.24"
@@ -12517,6 +12529,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"radix3@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "radix3@npm:1.1.2"
+  checksum: d4a295547f71af079868d2c2ed3814a9296ee026c5488212d58c106e6b4797c6eaec1259b46c9728913622f2240c9a944bfc8e2b3b5f6e4a5045338b1609f1e4
+  languageName: node
+  linkType: hard
+
 "ramda@npm:0.29.0":
   version: 0.29.0
   resolution: "ramda@npm:0.29.0"
@@ -14212,6 +14231,7 @@ __metadata:
     "@prisma/client": ^5.1.1
     "@prisma/nextjs-monorepo-workaround-plugin": ^5.1.1
     "@radix-ui/themes": ^1.0.0
+    "@silenteer/stato": ^1.2.2
     "@stack/services": "workspace:^"
     "@submodule/core": ^5.0.0-rc.0
     "@tanstack/react-query": ^4.32.6
@@ -14219,7 +14239,7 @@ __metadata:
     prisma: ^5.1.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    typescript: ^5.2.2
+    typescript: ^5.4.5
     use-stager: ^1.11.1
     valtio: ^1.11.2
     zod: ^3.21.4
@@ -14478,13 +14498,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
+"typescript@npm:^5.4.5":
+  version: 5.4.5
+  resolution: "typescript@npm:5.4.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
+  checksum: 2954022ada340fd3d6a9e2b8e534f65d57c92d5f3989a263754a78aba549f7e6529acc1921913560a4b816c46dce7df4a4d29f9f11a3dc0d4213bb76d043251e
   languageName: node
   linkType: hard
 
@@ -14498,13 +14518,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.2.2#~builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=5da071"
+"typescript@patch:typescript@^5.4.5#~builtin<compat/typescript>":
+  version: 5.4.5
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=5da071"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 303979762f9b8932c53f8149e866521a1265168b5c0fde8cc8ad83ac3d0e8ede8096cb02dff5f2de048e7f118a6f61902f81da12d5972c7fb582f09f2f18d169
+  checksum: 9cf4c053893bcf327d101b6c024a55baf05430dc30263f9adb1bf354aeffc11306fe1f23ba2f9a0209674359f16219b5b7d229e923477b94831d07d5a33a4217
   languageName: node
   linkType: hard
 
